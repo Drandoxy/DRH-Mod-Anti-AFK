@@ -52,6 +52,8 @@ class Main extends Mod {
 		var layer = context.core.facade.menuNavigationController.getTopUILayer();
 		if (layer != null && layer != "")
 			return;
+		if (!FriendRoster.allowed(context.state.heroes))
+			return;
 		var attack = hero.PlayerAttack;
 		var weapons = hero.weaponControllers;
 		if (attack == null || weapons == null || attack.isCharging())

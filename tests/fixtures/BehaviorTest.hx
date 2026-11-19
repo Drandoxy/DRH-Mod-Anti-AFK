@@ -48,6 +48,23 @@ class BehaviorTest {
 		mod.context.core.facade.menuNavigationController.getTopUILayer = function() return "DISTRIBUTED_DUNGEON_SUMMARY";
 		tick(mod);
 		expect(hero.PlayerAttack.downs.length == 3, "Summary action");
+		mod.context.core.facade.menuNavigationController.getTopUILayer = function() return "";
+		var localEntry = new mods.api.dungeon.Hero(true);
+		var friend = new mods.api.dungeon.Hero(false,true);
+		var stranger = new mods.api.dungeon.Hero(false,false);
+		mod.context.state.heroes=[localEntry,friend,stranger];tick(mod);
+		expect(hero.PlayerAttack.downs.length==3,"Stranger did not block");
+		mod.context.state.heroes=[localEntry,friend];tick(mod);
+		expect(hero.PlayerAttack.downs.length==4,"Leaving stranger did not unblock same AFK episode");
+		tick(mod);expect(hero.PlayerAttack.downs.length==4,"Friends triggered repeated tap");
+		hero.AFK=false;tick(mod);hero.AFK=true;
+		var unknown=new mods.api.dungeon.Hero(false);unknown.player=null;
+		mod.context.state.heroes=[localEntry,unknown];tick(mod);
+		expect(hero.PlayerAttack.downs.length==4,"Unknown player allowed");
+		mod.context.state.heroes=[localEntry];tick(mod);
+		expect(hero.PlayerAttack.downs.length==5,"Solo game blocked");
+		expect(!mods.anti_afk.FriendRoster.allowed([]),"Empty roster allowed");
+		expect(!mods.anti_afk.FriendRoster.allowed([friend]),"Roster without local hero allowed");
 		trace("Actual Main: slot priority, cooldown/mana fallback, one-shot, release, town and summary guards passed");
 	}
 }

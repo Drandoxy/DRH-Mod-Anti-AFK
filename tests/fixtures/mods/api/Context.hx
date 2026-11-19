@@ -5,8 +5,8 @@ class Context {
 	public var state:Dynamic;
 
 	public function new() {
-		core = {facade: {mainStateMachine: {currentStateName: "RunState"}, menuNavigationController: {getTopUILayer: function() return ""}},
+		core = {facade: {mainStateMachine: {currentStateName: "RunState", mLoadingScreenState:{mFriendOnly:true,mFriendID:0,mMapID:0,mMapNodeID:1}}, menuNavigationController: {getTopUILayer: function() return ""}},
 			overlay: new openfl.display.Sprite()};
-		state = {floor: {}, inTown: false};
+		state = {floor: {}, inTown: false, heroes:[new mods.api.dungeon.Hero(true)]};
 	}
 }

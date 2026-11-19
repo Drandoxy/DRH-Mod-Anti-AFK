@@ -1,8 +1,8 @@
 {
   "id": "anti_afk",
   "name": "Anti-AFK",
-  "description": "Tap one available weapon once when your own hero becomes AFK in a dungeon.",
-  "version": "0.1.0",
+  "description": "Tap one available weapon per AFK appearance only while the current dungeon contains you and your friends.",
+  "version": "0.1.1",
   "author": "Drandox",
   "api": "1.5.0",
   "entry": "Main",
